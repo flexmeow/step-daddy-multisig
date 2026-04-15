@@ -1,0 +1,18 @@
+[project]
+name = "robowoofy-ng"
+version = "0.1.0"
+description = "Robowoofy New Generation"
+readme = "README.md"
+requires-python = ">=3.12"
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+lint.select = ["E", "F", "I", "W"]  # pycodestyle, pyflakes, isort, and warnings
+fix = true
+exclude = ["__pypackages__"]
+lint.ignore = ['E501']
+
+[tool.ruff.format]
+quote-style = "double"
+docstring-code-format = true
