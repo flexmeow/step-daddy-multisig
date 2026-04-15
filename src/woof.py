@@ -7,17 +7,18 @@ REGISTRY = load_contract("0xA6D5efF88aB2D192db11A32912c346c8c0AFe125")
 
 @sign()
 def endorse():
-    # lender = "0xA967FcDb8a2bEF38caaB6131169c9D45be550Db0"
-    # trove_manager = "0xAA1ec58c0Ad8eeDED77322d552b12759CAa0c1Cc"
-    ENS = load_contract("0xa58E81fe9b61B5c3fE2AFD33CF304c454AbFc7Cb")
-    print("Accepting ownership of the Safe...")
+    lender = load_contract("0xA967FcDb8a2bEF38caaB6131169c9D45be550Db0")
+    trove_manager = load_contract("0xAA1ec58c0Ad8eeDED77322d552b12759CAa0c1Cc")
+
+    # set ENS name
+    ens = load_contract("0xa58E81fe9b61B5c3fE2AFD33CF304c454AbFc7Cb")
+    ens.setName("daddy.flexmeow.eth")
+
+    # accept Daddy ownership
     DADDY.accept_ownership()
-    print("Setting ENS name...")
-    ENS.setName("stepdaddy.flexmeow.eth")
 
-    # // // Accept Lender management
-    # // DADDY.execute(address(_lender), abi.encodeWithSelector(ITokenizedStrategy.acceptManagement.selector), 0, true);
+    # accept lender management
+    DADDY.execute(lender.address, lender.acceptManagement.encode_input())
 
-    # // // Endorse market
-    # // DADDY.execute(address(REGISTRY), abi.encodeWithSelector(IRegistry.endorse.selector, _troveManager), 0, true);
-    # 0xAA1ec58c0Ad8eeDED77322d552b12759CAa0c1Cc
+    # endorse market
+    DADDY.execute(REGISTRY.address, REGISTRY.endorse.encode_input(trove_manager.address))
