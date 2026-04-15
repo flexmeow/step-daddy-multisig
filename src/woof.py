@@ -2,21 +2,22 @@ from .config import SAFE
 from .sign import sign
 from .utils import load_contract
 
+DADDY = load_contract("0x4e8341C77c94cCE982AB96d92BB28D69f4638290")
+REGISTRY = load_contract("0xA6D5efF88aB2D192db11A32912c346c8c0AFe125")
 
 @sign()
-def woofy():
-    # Instantiate contracts with `load_contract`
-    ycrv = load_contract("0xFCc5c47bE19d06BF83eB04298b026F81069ff65b")
-    ybs = load_contract("0xE9A115b77A1057C918F997c32663FdcE24FB873f")
+def endorse():
+    # lender = "0xA967FcDb8a2bEF38caaB6131169c9D45be550Db0"
+    # trove_manager = "0xAA1ec58c0Ad8eeDED77322d552b12759CAa0c1Cc"
+    ENS = load_contract("0xa58E81fe9b61B5c3fE2AFD33CF304c454AbFc7Cb")
+    print("Accepting ownership of the Safe...")
+    DADDY.accept_ownership()
+    print("Setting ENS name...")
+    ENS.setName("stepdaddy.flexmeow.eth")
 
-    # Reference our Safe with `SAFE`
-    balance = ycrv.balanceOf(SAFE)
-    print(f"Our yCRV balance: {balance / 1e18:.4f}")
+    # // // Accept Lender management
+    # // DADDY.execute(address(_lender), abi.encodeWithSelector(ITokenizedStrategy.acceptManagement.selector), 0, true);
 
-    # Approve YBS to pull our yCRV
-    ycrv.approve(ybs.address, balance)
-    print("Approved!")
-
-    # Stake yCRV into YBS
-    ybs.stake(balance)
-    print("Staked!")
+    # // // Endorse market
+    # // DADDY.execute(address(REGISTRY), abi.encodeWithSelector(IRegistry.endorse.selector, _troveManager), 0, true);
+    # 0xAA1ec58c0Ad8eeDED77322d552b12759CAa0c1Cc
