@@ -11,7 +11,9 @@ permissions:
 
 jobs:
   run-woofy:
-    if: startsWith(github.event.comment.body, '/run')
+    if: >-
+      startsWith(github.event.comment.body, '/run')
+      && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
     runs-on: ubuntu-latest
 
     steps:
