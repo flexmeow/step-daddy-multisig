@@ -15,3 +15,8 @@ def endorse():
 
     # endorse market
     DADDY.execute(REGISTRY.address, REGISTRY.endorse.encode_input(trove_manager.address))
+
+@sign()
+def set_ens_name():
+    ens = load_contract("0xa58E81fe9b61B5c3fE2AFD33CF304c454AbFc7Cb")
+    ens.setName("daddy.flexmeow.eth")
