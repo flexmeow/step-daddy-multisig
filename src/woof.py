@@ -2,21 +2,16 @@ from .config import SAFE
 from .sign import sign
 from .utils import load_contract
 
+DADDY = load_contract("0x4e8341C77c94cCE982AB96d92BB28D69f4638290")
+REGISTRY = load_contract("0xA6D5efF88aB2D192db11A32912c346c8c0AFe125")
 
 @sign()
-def woofy():
-    # Instantiate contracts with `load_contract`
-    ycrv = load_contract("0xFCc5c47bE19d06BF83eB04298b026F81069ff65b")
-    ybs = load_contract("0xE9A115b77A1057C918F997c32663FdcE24FB873f")
+def endorse():
+    lender = load_contract("0xA967FcDb8a2bEF38caaB6131169c9D45be550Db0")
+    trove_manager = load_contract("0xAA1ec58c0Ad8eeDED77322d552b12759CAa0c1Cc")
 
-    # Reference our Safe with `SAFE`
-    balance = ycrv.balanceOf(SAFE)
-    print(f"Our yCRV balance: {balance / 1e18:.4f}")
+    # accept lender management
+    DADDY.execute(lender.address, lender.acceptManagement.encode_input())
 
-    # Approve YBS to pull our yCRV
-    ycrv.approve(ybs.address, balance)
-    print("Approved!")
-
-    # Stake yCRV into YBS
-    ybs.stake(balance)
-    print("Staked!")
+    # endorse market
+    DADDY.execute(REGISTRY.address, REGISTRY.endorse.encode_input(trove_manager.address))
