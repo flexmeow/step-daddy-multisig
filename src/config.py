@@ -11,7 +11,7 @@ class NetworkCfg(TypedDict):
 
 NETWORKS: Mapping[str, NetworkCfg] = {
     "eth": {
-        "safe": BrownieSafe("ychad.eth"),
+        "safe": BrownieSafe("stepdaddy.flexmeow.eth"),
         "safe_tx_queue_url": "https://app.safe.global/transactions/queue?safe=eth:",
     },
     "base": {
